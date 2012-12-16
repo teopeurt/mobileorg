@@ -21,8 +21,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DBRestClient.h"
+//#import "DBRestClient.h"
 #import "TransferManager.h"
+#import "DropboxSDK/DropboxSDK.h"
 
 @class TransferContext;
 

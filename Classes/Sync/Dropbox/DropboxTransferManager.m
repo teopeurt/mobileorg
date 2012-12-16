@@ -25,9 +25,14 @@
 #import "StatusUtils.h"
 #import "SyncManager.h"
 #import "Settings.h"
-#import "DBSession.h"
-#import "DBRequest.h"
-#import "DBRestClient.h"
+
+
+//#import "DBSession.h"
+//#import "DBRequest.h"
+//#import "DBRestClient.h"
+
+
+#import "DropboxSDK/DropboxSDK.h"
 
 // Just #define CONSUMER_SECRET @"xxx" and CONSUMER_KEY @"yyy" in this file
 #import "DropboxKeys.h"
@@ -63,8 +68,21 @@ static DropboxTransferManager *gInstance = NULL;
         active = false;
         paused = false;
         data = [[NSMutableData alloc] init];
-        dbSession = [[DBSession alloc] initWithConsumerKey:CONSUMER_KEY consumerSecret:CONSUMER_SECRET];
-        dbClient = [[DBRestClient alloc] initWithSession:dbSession andRoot:@"sandbox"];
+        
+        
+        //dbSession = [[DBSession alloc] initWithConsumerKey:CONSUMER_KEY consumerSecret:CONSUMER_SECRET];
+        //dbClient = [[DBRestClient alloc] initWithSession:dbSession andRoot:@"sandbox"];
+        
+        // NOTE: New oAuth
+        dbSession = 
+        [[[DBSession alloc]
+          initWithAppKey:@"APP_KEY"
+          appSecret:@"APP_SECRET"
+          root:kDBRootAppFolder] // either kDBRootAppFolder or kDBRootDropbox
+         autorelease];
+        [DBSession setSharedSession:dbSession];
+        
+        
         dbClient.delegate = self;
     }
     return self;

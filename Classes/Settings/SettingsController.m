@@ -276,7 +276,9 @@ enum {
             }
             return cell;
 
-        } else if ([[Settings instance] serverMode] == ServerModeDropbox) {
+        } 
+        
+        else if ([[Settings instance] serverMode] == ServerModeDropbox) {
 
             if ((![[DropboxTransferManager instance] isLinked] && indexPath.row < 3) || indexPath.row == 0) {
                 static NSString *CellIdentifier = @"SettingsDropboxConfigurationCell";
@@ -648,6 +650,8 @@ enum {
     return 46;
 }
 
+// TODO: start work at FIXME (weird bug in xcode 4?, have to place it outside method body
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
     // AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
@@ -672,8 +676,17 @@ enum {
                 [[self tableView] setNeedsDisplay];
             } else {
                 [[DropboxTransferManager instance] setLoginDelegate:self];
+                 
+                // FIXME: old dropbox login - need to change to this
+                // https://www.dropbox.com/developers/start/authentication#ios
+                // 1. create a DBSession Object
+                // 2. 
+                
                 [[DropboxTransferManager instance] login:[[Settings instance] dropboxEmail] andPassword:dropboxPassword];
                 dropboxLoggingIn = true;
+                
+                
+                
                 [[self tableView] cellForRowAtIndexPath:indexPath].textLabel.text = @"Logging in...";
             }
 
